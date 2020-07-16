@@ -1,0 +1,44 @@
+{% extends "main.html" %}
+{% load custom_tags %}
+{% load django_tables2 %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block body_title %}<a class="navbar-brand" href=".">{{ body_title }}</a>{% endblock %}
+{% block head %}{% endblock %}
+{% block breadcrumb_primary %}{% endblock %}
+{% block breadcrumb_secondary %}{% endblock %}
+{% block script %}{% endblock %}
+
+{% block content %}
+<!--Table ToolBar Start-->
+    <div class="col-6" >
+        <div class="card">
+        <div class="card-header">
+            <div class="row">
+            <h6 class="col-12">{{ label }}</h6>
+            </div>
+        </div>
+            <div class="card-body">
+                {% detail_view object %}
+            </div>
+            <div class="card-footer">
+                <a href="update{{ parent_get_link }}" class="btn btn-outline-dark">Изменить</a>
+                <a href="{{ parent_link }}" class="btn btn-outline-dark">Закрыть</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-6" >
+        <div class="card table-inside">
+            <div class="card-header">
+                <div class="row">
+                    <h6 class="col-6">Возможные переходы</h6>
+                    <a href="/state_edge/create/?state={{ object.id }}"
+                       class="far fa-plus-square text-dark col-6 text-right"></a>
+                </div>
+            </div>
+            <div class="card-body">
+                {% render_table state_edge_table "tables.html" %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,152 @@
+/* The navigation bar */
+.navbar {
+  /*overflow: hidden;*/
+  /*background-color: #333;*/
+  position: fixed; /* Set the navbar to fixed position */
+  top: 0; /* Position the navbar at the top of the page */
+  width: 100%; /* Full width */
+  justify-content: normal;
+  padding: 0 1rem;
+  background-color: #111 !important; /* Black*/
+  z-index:100;
+}
+
+/* Links inside the navbar */
+.navbar a {
+  float: left;
+  display: block;
+  color: #818181;
+  text-align: left;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change background on mouse-over */
+.navbar a:hover {
+  background: #343a40;
+  color: white;
+}
+
+.navbar a.active{
+    background-color: #4CAF50 !important;
+    color: white;
+    white-space: nowrap;
+}
+
+/* The dropdown container */
+.tamer-dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+/* Dropdown button */
+.tamer-dropdown .tamer-dropbtn {
+  /*font-size: 16px;*/
+  border: none;
+  outline: none;
+  color: #818181;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit; /* Important for vertical align on mobile phones */
+  margin: 0; /* Important for vertical align on mobile phones */
+}
+/* Dropdown button */
+.tamer-dropbtn.active {
+    background-color: #4CAF50 !important;
+    color: white;
+}
+
+/* Add a red background color to navbar links on hover */
+.tamer-navbar a:hover, .tamer-dropdown:hover .tamer-dropbtn {
+  background-color:  #343a40;
+  color: white;
+}
+
+/* Dropdown content (hidden by default) */
+.tamer-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #111;    /*#f9f9f9;*/
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.tamer-dropdown-content a {
+  float: none;
+/*  color: black;*/
+  color: #818181;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+/* Add a grey background color to dropdown links on hover */
+.tamer-dropdown-content a:hover {
+  background-color:  #343a40;
+  color: white;
+}
+
+/* Show the dropdown menu on hover */
+.tamer-dropdown:hover .tamer-dropdown-content {
+  display: block;
+}
+
+/* The subnavigation menu */
+.tamer-subnav {
+  float: left;
+  overflow: hidden;
+}
+
+/* Subnav button */
+.tamer-subnav .tamer-subnavbtn {
+  font-size: 16px;
+  border: none;
+  outline: none;
+  color: #818181;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+/* Add a red background color to navigation links on hover */
+.tamer-subnav:hover .tamer-subnavbtn {
+  background-color:  #343a40;
+  color: white;
+}
+
+/* Style the subnav content - positioned absolute */
+.tamer-subnav-content {
+  display: none;
+  position: absolute;
+  left: 0;
+  background-color: #4CAF50;
+  width: 100%;
+  z-index: 1;
+}
+
+/* Style the subnav links */
+.tamer-subnav-content a {
+  float: left;
+  color: #818181;
+  text-decoration: none;
+}
+
+/* Add a grey background color on hover */
+.tamer-subnav-content {
+  background-color: #111;
+  color: black;
+}
+
+/* When you move the mouse over the subnav container, open the subnav content */
+.tamer-subnav:hover .tamer-subnav-content {
+  display: block;
+}
+
+.tamer-subnavbtn.active {
+    background-color: #4CAF50 !important;
+    color: white;
+}

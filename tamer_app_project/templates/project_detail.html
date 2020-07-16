@@ -1,0 +1,102 @@
+{% extends "main.html" %}
+{% load custom_tags %}
+{% load django_tables2 %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block body_title %}<a class="navbar-brand" href=".">{{ body_title }}</a>{% endblock %}
+{% block head %}{% endblock %}
+{% block breadcrumb_primary %}{% endblock %}
+{% block breadcrumb_secondary %}{% endblock %}
+{% block script %}{% endblock %}
+
+{% block content %}
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 ">
+        <div class="card">
+        <div class="card-header">
+            <div class="row">
+            <h6 class="col-12">Титульная информаци о проекте</h6>
+            </div>
+        </div>
+            <div class="card-body">
+                {% detail_view object %}
+            </div>
+            <div class="card-footer">
+                <a href="update" class="btn btn-outline-dark">Изменить</a>
+                <a href=".." class="btn btn-outline-dark">Закрыть</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mt-4 mr-1">
+    <div class="col-6">
+        <div class="card table-inside">
+            <div class="card-header">
+                <div class="row">
+                    <h6 class="col-6">Этапы</h6>
+                    <a href="{% url 'tamer-stage-create' %}?project={{ object.id }}"
+                       class="far fa-plus-square col-6"></a>
+                </div>
+            </div>
+            <div class="card-body">
+                {% render_table stage_table "tables.html" %}
+            </div>
+        </div>
+    </div>
+    <div class="col-6 ">
+        <div class="card table-inside">
+            <div class="card-header">
+                <div class="row">
+                    <h6 class="col-6">Субподрядные работы</h6>
+                    <a href="{% url 'tamer-subcontract-create' %}?project={{ object.id }}"
+                       class="far fa-plus-square col-6"></a>
+                </div>
+            </div>
+            <div class="card-body">
+                {% render_table subcontract_table "tables.html" %}
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="card table-inside">
+            <div class="card-header">
+                <div class="row">
+                    <h6 class="col-6">Командировки</h6>
+                    <a href="{% url 'tamer-business-trip-create' %}?project={{ object.id }}"
+                       class="far fa-plus-square col-6"></a>
+                </div>
+            </div>
+            <div class="card-body">
+                {% render_table business_trip_table "tables.html" %}
+            </div>
+        </div>
+    </div>
+    <div class="col-6 ">
+        <div class="card table-inside">
+            <div class="card-header">
+                <div class="row">
+                    <h6 class="col-6">Обучение</h6>
+                    <a href="{% url 'tamer-education-create' %}?project={{ object.id }}"
+                       class="far fa-plus-square col-6"></a>
+                </div>
+            </div>
+            <div class="card-body">
+                {% render_table education_table "tables.html" %}
+            </div>
+        </div>
+    </div>
+    <div class="col-6 ">
+        <div class="card table-inside">
+            <div class="card-header">
+                <div class="row">
+                    <h6 class="col-6">Оборудование</h6>
+                    <a href="{% url 'tamer-equipment-create' %}?project={{ object.id }}"
+                       class="far fa-plus-square col-6"></a>
+                </div>
+            </div>
+            <div class="card-body">
+                {% render_table equipment_table "tables.html" %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

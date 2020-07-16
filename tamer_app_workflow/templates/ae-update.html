@@ -1,0 +1,119 @@
+{% extends "main.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="/static/webix/webix.css?v=6.0.5" type="text/css" charset="utf-8">
+<script src="/static/webix/webix.js?v=6.0.5" type="text/javascript" charset="utf-8"></script>
+{% endblock %}
+{% block breadcrumb_dashboard %}
+{% endblock %}
+{% block breadcrumb_opportunity %}
+{% endblock %}
+{% block body_title %}<a class="navbar-brand" href=".">Управление рисками</a>{% endblock %}
+{% block menu %}
+{% endblock %}
+{% block script %}
+<style>
+        .webix_inp_label, .webix_inp_static {
+            font-weight: 400;
+            font-size: 1rem;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        }
+
+</style>
+<script type="text/javascript" charset="utf-8">
+        webix.Date.startOnMonday = true;
+        webix.i18n.setLocale('ru-RU')
+        {% for field in formset.0 %}
+            {% if not field.is_hidden %}
+                {% if field.name in date_fields %}
+            var month = {{ field.initial.month }} - 1;
+                    webix.ui({
+                        view: "datepicker",
+                        container: 'id_form-0-s-{{ field.name }}',
+                        value: {% if not field.initial %}new Date(){% else %}
+                        new Date({{ field.initial.year }}, month , {{ field.initial.day }}){% endif %},
+                        id: 'id_form-0-s-{{ field.name }}'
+                    });
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+
+
+
+</script>
+{% endblock %}
+
+{% block content %}
+<!--Table ToolBar Start-->
+<form enctype="multipart/form-data" action="" method="post">
+    <div class="row justify-content-md-center">
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 ">
+            <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <h6>{{ label }} - "{{ action.name }}"</h6>
+            </div>
+        </div>
+                <div class="card-body">
+                    {% csrf_token %}
+                    {{ formset.management_form }}
+                    {% for field in formset.0 %}
+                    {% if not field.is_hidden %}
+                    <div class="row">
+                        <div class="col-sm-4 col-form-label">
+                            {{ field.label_tag }}
+                        </div>
+                        {% if field.errors %}
+                        <div class="col">
+                            {% else %}
+                            <div class="col">
+                                {% endif %}
+                                {% if field.name in date_fields %}
+                                <div id="id_form-0-s-{{ field.name }}" class="col-md-4 pl-0"></div>
+                                <input id="id_form-0-{{ field.name }}" name="form-0-{{ field.name }}" type="hidden"
+                                       value="fff">
+                                {% else %}
+                                {{ field }}
+                                {% endif %}
+                                {% if field.errors %}
+                                <div class="create_update_error">{{ field.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% else %}
+                        {{ field }}
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-success" id="submit">Сохранить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+</form>
+<!--Table ToolBar END-->
+<script src="/static/js/jquery.min.js"></script>
+
+<script>
+        $(document).ready(function () {
+            $('#submit').click(function () {
+                //alert("JQuery Running!")
+                {% for field in formset.0 %}
+                    {% if field.name in date_fields %}
+                        dt = $$('id_form-0-s-{{ field.name }}').getText()
+                        $('#id_form-0-{{ field.name }}').val(dt)
+                    {% endif %}
+                {% endfor %}
+
+            })
+        })
+
+        //var x=2;
+        //document.getElementById('select').value= x;
+
+
+
+</script>
+
+{% endblock %}

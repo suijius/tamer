@@ -1,0 +1,43 @@
+{% extends "main.html" %}
+{% load custom_tags %}
+{% load django_tables2 %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block body_title %}<a class="navbar-brand" href=".">{{ body_title }}</a>{% endblock %}
+{% block head %}{% endblock %}
+{% block breadcrumb_primary %}{% endblock %}
+{% block breadcrumb_secondary %}{% endblock %}
+{% block script %}{% endblock %}
+
+{% block content %}
+<div class="col-2">
+</div>
+<div class="col-8">
+    <div class="row">
+                <h1 class="col-12 text-center">{{ object.name }}
+                    <a href="update" class="fa fa-pencil-alt text-dark h5 ml-4 align-middle"></a>
+                    <a href="{% url 'tamer-document-section-create' %}?document={{ object.id }}"
+                   class="fas fa-stream  text-dark h5 align-middle"></a>
+                    <a href="{% url 'tamer-document-section-apply-template' %}?document={{ object.id }}"
+                   class="fas fa-book  text-dark h5 align-middle"></a>
+                </h1>
+    </div>
+    {% for section in section_list %}
+    <div class="row">
+        <div class="col-12">
+                <h2 class="text-left">{{ section.sort }}. {{ section.section }}
+                    <a href="{% url 'tamer-document-section-update' section.id %}?document={{ object.id }}"
+                   class="fas fa-pencil-alt  text-dark h5 align-middle"></a>
+                    <a href="{% url 'tamer-document-section-delete' section.id %}"
+                   class="fas far fa-trash-alt text-dark h5 align-middle"></a>
+                </h2>
+        {{ section.description|safe }}
+            </div>
+    </div>
+    {% endfor %}
+</div>
+<div class="col-2 text-right">
+<a href=".." class="fa fa-window-close text-dark"></a>
+</div>
+
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "main.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block body_title %}<a class="navbar-brand" href=".">{{ body_title }}</a>{% endblock %}
+{% block head %}{% endblock %}
+{% block breadcrumb_primary %}{% endblock %}
+{% block breadcrumb_secondary %}{% endblock %}
+{% block script %}{% endblock %}
+
+{% block content %}
+<!--    <div class="justify-content-md-center mt-4">-->
+<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3"></div>
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 ">
+            <form enctype="multipart/form-data" action="" method="post">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <h6 class="col-12">{{ label }}</h6>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            {% if not field.is_hidden %}
+                                <div class="row">
+                                    <div class="col-sm-4 col-form-label">
+                                        {{ field.label_tag }}
+                                    </div>
+                                    <div class="col">
+                                        <div class="input-group mb-3">
+                                            {{ field }}
+                                            {% if field.name in add_foreign_fields %}
+                                                <div class="input-group-append">
+                                                    <a href="/{{ field.name }}/create" class="btn btn-outline-dark border">...</a>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                        {% if field.errors %}
+                                            <div class="create_update_error">{{ field.errors.0 }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% else %}
+                                {{ field }}
+                            {% endif %}
+                        {% endfor %}
+                        {{ form.media }}
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-outline-dark" type="submit">Сохранить</button>
+                        <button class="btn btn-outline-dark" type="reset">Отмена</button>
+                        <a href="{{ parent_link }}" class="btn btn-outline-dark">Закрыть</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+<!--    </div>-->
+{% endblock %}

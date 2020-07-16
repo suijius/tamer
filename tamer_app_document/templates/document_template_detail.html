@@ -1,0 +1,40 @@
+{% extends "main.html" %}
+{% load custom_tags %}
+{% load django_tables2 %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block body_title %}<a class="navbar-brand" href=".">{{ body_title }}</a>{% endblock %}
+{% block head %}{% endblock %}
+{% block breadcrumb_primary %}{% endblock %}
+{% block breadcrumb_secondary %}{% endblock %}
+{% block script %}{% endblock %}
+
+{% block content %}
+<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <h6 class="col-10 mt-2">{{ label }}: {{ object.id }} - {{ object.type }} ({{ object.description }})</h6>
+                <div class="col-2">
+            <a href="update" class="btn btn-outline-dark text-right">Изменить</a>
+            <a href=".." class="btn btn-outline-dark">Закрыть</a>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-12">
+    <div class="card table-inside">
+        <div class="card-header">
+            <div class="row">
+                <h6 class="col-6">Разделы документа</h6>
+                <a href="{% url 'tamer-document-template-section-create' %}?document_template={{ object.id }}"
+                   class="far fa-plus-square col-6"></a>
+            </div>
+        </div>
+        <div class="card-body">
+            {% render_table table "tables.html" %}
+        </div>
+    </div>
+</div>
+{% endblock %}

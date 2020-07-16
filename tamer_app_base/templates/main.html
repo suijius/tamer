@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+{% load custom_tags %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="icon" href="/static/images/tamer.png">
+    <title>{% block title %}Без заголовка{% endblock %}</title>
+
+    <link href="/static/bootstrap-4.5.0-dist/css/bootstrap.css" rel="stylesheet">
+    <link href="/static/css/custom.css" rel="stylesheet">
+    <link href="/static/css/sidebar.css" rel="stylesheet">
+    <link href="/static/css/navbar.css" rel="stylesheet">
+    <link href="/static/css/pagination.css" rel="stylesheet">
+    <link href="/static/css/table.css" rel="stylesheet">
+    <link href="/static/bootstrap-datepicker-1.9.0-dist/css/bootstrap-datepicker3.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="/static/fontawesome-free-5.9.0-web/css/all.css">
+
+    {% block head %}{% endblock %}
+
+</head>
+
+<body>
+<div>
+
+    <!-- Sidebar -->
+<!--    <div class="sidenav bg-dark">-->
+<!--        <div class="sidenav-brand">Tamer</div>-->
+<!--        {% sidebar_settings view %}-->
+<!--    </div>-->
+<div id="mySidenav" class="sidenav p-0">
+    <div class="row">
+        <div class="col-6">
+        <h3 class="p-1 text-light text-center">Tamer</h3>
+        </div>
+        <div class="col-6">
+  <a href="javascript:void(0)" class="closebtn fas" onclick="closeNav()">&times;</a>
+        </div>
+        </div>
+        {% sidebar_settings view %}
+</div>
+    <div class="main" id="main">
+        <div class="bg-dark navbar-dark navbar">
+                <span onclick="openNav()" class="fas fa-bars text-light pl-1 navbar-brand"></span>
+            <span class="navbar-brand">{{ view.title }}</span>
+<!--            <div class="topnav">-->
+                {% navebar_settings view %}
+<!--            </div>-->
+        </div>
+            {% block topnav %}
+            {% endblock %}
+        <div class="container-fluid">
+            {% block breadcrumb_primary %}
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Мониторинг</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ prj_type }}</li>
+                    </ol>
+                </nav>
+            {% endblock %}
+            {% block breadcrumb_secondary %}
+            {% endblock %}
+        <div class="row mt-5 pt-4">
+            {% block content %}
+
+
+
+            {% endblock %}
+        </div>
+    </div>
+
+</div>
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="/static/js/jquery-3.3.1.min.js"></script>
+<script src="/static/bootstrap-4.3.1-dist/js/bootstrap.js"></script>
+<script src="/static/bootstrap-datepicker-1.9.0-dist/js/bootstrap-datepicker.js"></script>
+<script src="/static/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.ru.min.js"></script>
+    <script>
+
+/* Set the width of the side navigation to 250px and the left margin of the page content to 250px and add a black background color to body */
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+  //document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+}
+
+/* Set the width of the side navigation to 0 and the left margin of the page content to 0, and the background color of body to white */
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+  document.getElementById("main").style.marginLeft = "0";
+  document.body.style.backgroundColor = "white";
+}
+{% block script %}
+{% endblock %}
+    </script>
+
+</body>
+</html>
+

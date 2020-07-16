@@ -1,0 +1,62 @@
+{% extends "main.html" %}
+{% load django_tables2 %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block body_title %}<a class="navbar-brand" href=".">{{ body_title }}</a>{% endblock %}
+{% block head %}{% endblock %}
+{% block breadcrumb_primary %}{% endblock %}
+{% block breadcrumb_secondary %}{% endblock %}
+
+{% block content %}
+        <div class="col-12">
+            <div class="card table-inside">
+                <div class="card-header">
+                    <div class="row">
+                        <h6 class="col-6">{{ caption }}</h6>
+                        <a href="create" class="far fa-plus-square col-6"></a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    {% render_table table "tables.html" %}
+                </div>
+            </div>
+        </div>
+<!-- Modal Delete Dialog-->
+<div id="tamer-delete" class="tamer-modal">
+    <div class="card tamer-modal-content">
+        <div class="card-header">
+            <div class="row">
+                <h6 class="col-12">Удаление записи</h6>
+            </div>
+        </div>
+        <h5 class="text-center">Вы точно хотите запись?</h5>
+        <span id="tamer-subject" class="p-4"></span>
+        <form method="post" id="form-delete">{% csrf_token %}
+            <input hidden name="is_archive" value="True">
+            <div class="card-footer">
+                <button class="btn btn-outline-dark" type="submit">Удалить</button>
+                <a href="." class="btn btn-outline-dark">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+function onclick_modal(id, subject){
+    document.getElementById('tamer-delete').style.display='block';
+    document.getElementById('form-delete').action = id+'/delete/';
+    document.getElementById('tamer-subject').innerText = subject;
+}
+
+// Get the modal
+var modal = document.getElementById('tamer-delete');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+
+}
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "main.html" %}
+{% load custom_tags %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block body_title %}<a class="navbar-brand" href=".">{{ body_title }}</a>{% endblock %}
+{% block head %}{% endblock %}
+{% block breadcrumb_primary %}{% endblock %}
+{% block breadcrumb_secondary %}{% endblock %}
+{% block script %}{% endblock %}
+
+{% block content %}
+<!--    <div class="row justify-content-md-center mt-4">-->
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 ">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <h6 class="col-12">{{ label }}</h6>
+                    </div>
+                </div>
+                <div class="card-body">
+                    {% detail_view object %}
+                </div>
+                <div class="card-footer">
+                    <a href="update{{ parent_get_link }}" class="btn btn-outline-dark">Изменить</a>
+                    <a href="{{ parent_link }}" class="btn btn-outline-dark">Закрыть</a>
+                </div>
+            </div>
+        </div>
+<!--    </div>-->
+{% endblock %}

@@ -1,0 +1,15 @@
+/tamer_db.sqlite3
+/Архитектура.vsdx
+/Описание ПО.docx
+/tamer_app_base/static/bootstrap-4.3.1-dist
+/tamer_app_base/static/attachment
+/tamer_app_base/static/workflow
+*.pyc
+__pycache__
+/tamer_app_base/static/bootstrap-4.5.0-dist
+/.idea
+/pythonlib
+
+/tamer_app_base/static/bootstrap-datepicker-1.9.0-dist/
+/tamer_app_base/static/ckeditor/
+/tamer_app_base/static/fontawesome-free-5.9.0-web/
