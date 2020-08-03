@@ -13,7 +13,10 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 import os
 
 #path to development directory
-DEVEL = 'c:/Users/chepurnov_s/devel/'
+import todoist
+
+DEVEL = os.environ['Devel']
+TODOIST = os.environ['Todoist']
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -238,4 +241,25 @@ APPLICATION_SIDEBAR_SETTINGS = {
     'Документы': {
         'sidebar_link': 'document'
     }
+
+
 }
+
+
+def get_project_id():
+    api = todoist.TodoistAPI(TODOIST)
+    projects = api.state['projects']
+    tamer_project_id = 0
+    if len(projects):
+        for item in projects:
+            if item['name'] == 'Tamer':
+                tamer_project_id = item['id']
+    if tamer_project_id == 0:
+        project = api.projects.add('Tamer')
+        tamer_project_id = project['id']
+        api.commit()
+
+    return tamer_project_id
+
+
+TODOIST_TAMER_ID = get_project_id()

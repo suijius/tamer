@@ -19,7 +19,8 @@ class TamerProject(models.Model):
     def __str__(self):
         return '%s (%s)' % (self.subject, self.id)
 
-    def get_absolute_url(self):
+    @staticmethod
+    def get_absolute_url():
         return reverse('tamer-project-view')
 
 
@@ -106,36 +107,3 @@ class TamerBusinessTrip(models.Model):
 
     def __str__(self):
         return '%s %s' % (self.subject, self.project.subject)
-
-
-# Integration with workflow
-# try:
-#     from tamer_app_workflow.models import TamerInstance
-# except Exception as e:
-#     class TamerInstanceManager(models.Manager):
-#         def all(self):
-#             return []
-#
-#         def get_queryset(self):
-#             return []
-#
-#
-#     class TamerInstance(models.Model):
-#         objects = TamerInstanceManager()
-#
-#
-# class TamerProjectWorkflow(models.Model):
-#     id = models.AutoField(primary_key=True, verbose_name="ID")
-#     project = models.ForeignKey(TamerProject, on_delete=models.DO_NOTHING, verbose_name="Проект")
-#     instance = models.ForeignKey(TamerInstance, on_delete=models.DO_NOTHING, verbose_name="Бизнес процесс")
-#     description = models.TextField(verbose_name="Дополнительное описание")
-#
-#     class Meta:
-#         managed = False
-#         db_table = 'tamer_project_instance'
-
-    # def __str__(self):
-    #     return self.contact.__str__()
-
-
-

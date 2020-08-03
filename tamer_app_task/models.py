@@ -12,6 +12,8 @@ class TamerTask(models.Model):
     planning = models.DateField(verbose_name='Планируемая дата завершения')
     estimate = models.FloatField(verbose_name='Оценка трудозатрат')
     is_archive = models.BooleanField(default=False)
+    todoist_item_id = models.CharField(max_length=125, verbose_name='id объекта item системы Todoist')
+    todoist_note_id = models.CharField(max_length=125, verbose_name='id объекта note системы Todoist')
 
     class Meta:
         managed = False

@@ -130,10 +130,13 @@ def create_plantuml(workflow, state_id=0, file_name='', is_delay=False):
     f.writelines(uml_text)
     f.close()
 
-    cmd = 'java -jar c:\\Users\\chepurnov_s\\devel\\tamer\\plantuml.jar %s' % path
-    p = subprocess.Popen(cmd, shell=False)
-    p.wait()
-    p.kill()
+    try:
+        cmd = 'java -jar %stamer\\plantuml.jar %s' % (settings.DEVEL, path)
+        p = subprocess.Popen(cmd, shell=False)
+        p.wait()
+        p.kill()
+    except:
+        pass
 
 
 class TamerWorkflowView(TamerAppWorkflowCommon, tables.SingleTableView):

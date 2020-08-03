@@ -19,6 +19,11 @@ from tamer_app_workflow.views import create_plantuml
 from tamer_app_workflow import action
 from tamer_app_workflow.models import TamerWorkflow, TamerInstance, TamerEdge, TamerState, TamerActionEdge
 
+# Integration with Todoist
+import todoist
+
+from tamer import settings
+
 
 class TamerTaskView(TamerAppTaskCommon, tables.SingleTableView):
     template_name = 'task_view.html'
@@ -125,6 +130,15 @@ class TamerTaskCreate(TamerAppTaskCommon, CreateView):
         instance.desc = 'create'
         instance.object_id = self.object.id
         instance.save()
+
+        pid = settings.TODOIST_TAMER_ID
+        api = todoist.TodoistAPI(settings.TODOIST)
+        item = api.items.add(self.object.subject, project_id=pid, due={"date": self.object.planning})
+        note = api.notes.add(item.temp_id, self.object.description)
+        api.commit()
+        self.object.todoist_item_id = item.temp_id
+        self.object.todoist_note_id = note.temp_id
+        self.object.save()
         return p
 
 
@@ -200,6 +214,23 @@ class TamerTaskUpdate(TamerAppTaskCommon, UpdateView):
         instance = TamerInstance.add_instance(attachment, last_instance, description, next_state)
         create_plantuml(self.object.get_workflow(), instance.state.id, 'workflow\\task\\%s.txt' % self.object.id,
                         instance.is_delay)
+
+        pid = settings.TODOIST_TAMER_ID
+        api = todoist.TodoistAPI(settings.TODOIST)
+        if self.object.todoist_item_id is None:
+            item = api.items.add(self.object.subject, project_id=pid, due={"date": self.object.planning})
+            note = api.notes.add(item.temp_id, self.object.description)
+            self.object.todoist_item_id = item.temp_id
+            self.object.todoist_note_id = note.temp_id
+            self.object.save()
+        else:
+            api.items.update(self.object.todoist_item_id, content=self.object.subject, due={"date": self.object.planning})
+            api.notes.update(self.object.todoist_note_id, content=self.object.description)
+            api.notes.add(self.object.todoist_item_id, description)
+            if instance.state.is_last:
+                api.items.complete(self.object.todoist_item_id)
+        api.commit()
+
         return p
 
 
@@ -211,4 +242,9 @@ class TamerTaskDelete(TamerAppTaskCommon, DeleteView):
         item = self.model.objects.get(id=kwargs['pk'])
         item.is_archive = True
         item.save()
+
+        api = todoist.TodoistAPI(settings.TODOIST)
+        api.items.delete(item.todoist_item_id)
+        api.commit()
+
         return HttpResponseRedirect(self.success_url)

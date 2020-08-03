@@ -49,3 +49,5 @@ order by c desc
     def post(self, request, *args, **kwargs):
         self.success_url = '/task/%s' % request.GET.get('task', "")
         return super().post(request, *args, **kwargs)
+
+
